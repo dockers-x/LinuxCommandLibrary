@@ -1,0 +1,2177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Command Library - Complete Linux Command Reference</title>
+    <meta name="description" content="Complete Linux command reference with 7680+ manual pages, cheat sheets, and tips. Works offline. No tracking.">
+    <meta name="keywords" content="linux commands, terminal, command line, bash, shell, reference, manual pages, cheat sheet">
+    <meta name="author" content="Linux Command Library">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Linux Command Library">
+    <meta property="og:description" content="Complete Linux command reference with 7680+ manual pages, cheat sheets, and tips.">
+    <meta property="og:url" content="https://linuxcommandlibrary.com">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Linux Command Library">
+    <meta property="twitter:description" content="Complete Linux command reference with 7680+ manual pages, cheat sheets, and tips.">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/stylesheets/theme-variables.css?v=11">
+    <link rel="stylesheet" href="/stylesheets/base.css?v=11">
+    <script src="/scripts/copy.js?v=11" defer></script>
+    <script src="/scripts/man.js?v=11" defer></script>
+
+    <!-- Lucide Icons - Beautiful & consistent open source icon library -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <noscript>
+        <style>
+            #search-wrapper { display: none; }
+        </style>
+    </noscript>
+
+    <style>
+        /* Additional styles for API integration */
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #ddd;
+            border-top-color: #e45151;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Skeleton loading states */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s ease-in-out infinite;
+            border-radius: 4px;
+        }
+
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .skeleton-card {
+            background: #f9f7f6;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .skeleton-title {
+            height: 24px;
+            width: 60%;
+            margin-bottom: 12px;
+        }
+
+        .skeleton-text {
+            height: 16px;
+            width: 100%;
+            margin-bottom: 8px;
+        }
+
+        .skeleton-text.short {
+            width: 80%;
+        }
+
+        .skeleton-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        /* Screen reader only - for accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        /* Search wrapper enhancements */
+        #search-wrapper {
+            position: relative;
+            width: 100%;
+            display: inline-block;
+            margin-top: 40px; /* Add space between stats and search */
+            margin-bottom: 20px;
+        }
+
+        #search {
+            background-image: none !important;
+            padding-right: 48px;
+            font-size: 16px;
+            padding: 14px 48px 14px 20px;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            outline: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        #search:focus {
+            border-color: #e45151;
+            box-shadow: 0 0 0 4px rgba(228, 81, 81, 0.1), 0 2px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .search-indicator {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: #999;
+            transition: color 0.3s ease;
+        }
+
+        .search-indicator.searching {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .search-indicator.searching .search-icon {
+            color: #e45151;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .search-icon {
+            display: block;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #search:focus ~ .search-indicator .search-icon {
+            transform: scale(1.1);
+            color: #e45151;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .commands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        /* Categories grid styling */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 32px;
+            padding: 0 12px;
+        }
+
+        .category-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border-primary);
+            border-radius: 8px;
+            padding: 16px 12px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+            justify-content: flex-start;
+        }
+
+        .category-card:hover {
+            border-color: var(--border-accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--accent-shadow);
+            text-decoration: none;
+            background: var(--bg-card-hover);
+        }
+
+        .category-icon {
+            width: 36px;
+            height: 36px;
+            margin-bottom: 8px;
+            color: var(--accent-primary);
+            stroke-width: 2;
+            flex-shrink: 0;
+        }
+
+        .category-card:hover .category-icon {
+            transform: scale(1.05);
+            transition: transform 0.2s ease;
+        }
+
+        .category-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #151515;
+            margin-bottom: 6px;
+            line-height: 1.2;
+            width: 100%;
+        }
+
+        .category-description {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        .command-card {
+            background: #f9f7f6;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: #151515;
+        }
+
+        .command-card:hover {
+            border-color: #e45151;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-decoration: none;
+        }
+
+        .command-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .command-name {
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            font-weight: bold;
+            color: #e45151;
+        }
+
+        .command-category {
+            font-size: 12px;
+            color: #666;
+            background: #ddd;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .command-description {
+            font-size: 14px;
+            color: #444;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Fixed header layout */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        #top-border {
+            position: fixed;
+            top: 44px;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            height: auto !important;
+            min-height: 60px;
+            padding: 12px 0;
+            background: var(--header-bg);
+        }
+
+        #top-border > div {
+            height: auto !important;
+            min-height: 60px;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff;
+            white-space: nowrap;
+        }
+
+        .stats {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Adjust body to account for fixed header */
+        body {
+            padding-top: 104px; /* nav (44px) + top-border (60px) */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Content wrapper should grow to fill available space */
+        #content-wrapper {
+            flex: 1;
+            display: flex;
+            flex-flow: row;
+            justify-content: center;
+        }
+
+        /* Footer always at bottom */
+        footer {
+            margin-top: auto;
+        }
+
+        /* Statistics display */
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .stat {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--header-text);
+            margin-bottom: 4px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--header-text);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Ensure content doesn't overlap with fixed header */
+        #content {
+            padding-top: 20px;
+        }
+
+        #commands-page {
+            padding: 0 12px;
+        }
+
+        /* Alphabetical letter headlines */
+        .headline {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e45151;
+            margin: 30px 0 15px 0;
+            padding: 8px 16px;
+            background: rgba(228, 81, 81, 0.1);
+            border-left: 4px solid #e45151;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            grid-column: 1 / -1;
+            scroll-margin-top: 120px;
+        }
+
+        /* A-Z Quick Navigation */
+        .alphabet-nav {
+            position: sticky;
+            top: 104px;
+            z-index: 998;
+            background: var(--bg-secondary);
+            padding: 12px 0;
+            margin: 0 -12px 20px -12px;
+            border-bottom: 2px solid var(--border-primary);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .alphabet-nav-inner {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 12px;
+        }
+
+        .alphabet-nav-letter {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 1px solid var(--border-primary);
+        }
+
+        .alphabet-nav-letter:hover {
+            background: var(--accent-primary);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px var(--accent-shadow);
+        }
+
+        .alphabet-nav-letter.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .alphabet-nav-letter.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .alphabet-nav-label {
+            font-size: 12px;
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-right: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Command list styling */
+        #commandlist {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        #commandlist a {
+            display: block;
+            padding: 8px 12px;
+            background: #f9f7f6;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #333;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        #commandlist a:hover {
+            background: #e45151;
+            color: white;
+            border-color: #e45151;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(228, 81, 81, 0.3);
+        }
+
+        /* Basic command styles */
+        .basic-command {
+            cursor: default;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .basic-command .command-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .basic-command .copy-button {
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            opacity: 0.8;
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .basic-command .copy-button:hover {
+            opacity: 1;
+            background: var(--accent-hover);
+            transform: scale(1.05);
+        }
+
+        .basic-command .copy-button:active {
+            transform: scale(0.95);
+        }
+
+        .basic-command .command-name {
+            font-size: 16px;
+            color: var(--text-primary);
+            margin-right: 8px;
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
+            overflow-wrap: break-word;
+            line-height: 1.3;
+            max-width: calc(100% - 50px);
+        }
+
+        .basic-command:hover {
+            border-color: var(--border-primary);
+            transform: none;
+            box-shadow: none;
+        }
+
+        .basic-command .command-description {
+            color: var(--text-secondary);
+            font-size: 13px;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            line-height: 1.4;
+            margin-top: 6px;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: block;
+        }
+
+        .modal-content {
+            background: #f9f7f6;
+            max-width: 900px;
+            margin: 40px auto;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background: #e45151;
+            color: white;
+            padding: 20px;
+            position: relative;
+        }
+
+        .modal-command-name {
+            font-family: 'Courier New', monospace;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .modal-command-category {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 24px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .modal-body {
+            padding: 20px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .command-section {
+            margin-bottom: 24px;
+        }
+
+        .command-section h3 {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #151515;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .command-section-content {
+            font-size: 14px;
+            line-height: 1.6;
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            color: #222;
+            border: 1px solid #ccc;
+        }
+
+        .tldr-section {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 16px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .tldr-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .tldr-content {
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        /* Tips Page Styles */
+        .tips-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .tips-header h2 {
+            font-size: 28px;
+            color: #151515;
+            margin: 0;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #e45151, #d64141);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(228, 81, 81, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(228, 81, 81, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 6px rgba(228, 81, 81, 0.3);
+        }
+
+        .tip-card {
+            background: linear-gradient(135deg, #ffffff, #f9f7f6);
+            border: 2px solid #e0e0e0;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .tip-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .tip-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e45151;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tip-content {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .tip-content p {
+            margin-bottom: 12px;
+        }
+
+        .tip-content code {
+            background: #f5f5f5;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #e45151;
+            font-size: 14px;
+        }
+
+        /* Smooth transitions for theme changes */
+        * {
+            transition: background-color 0.1s ease-out,
+                       color 0.1s ease-out,
+                       border-color 0.1s ease-out,
+                       box-shadow 0.1s ease-out;
+        }
+
+        /* Disable transitions for specific elements that shouldn't animate */
+        .spinner,
+        .loading *,
+        .toast-notification,
+        .modal {
+            transition: none !important;
+        }
+
+        /* CSS Variables for Theme System */
+        :root {
+            --bg-primary: #f9f7f6;
+            --bg-secondary: #f6f6f6;
+            --bg-tertiary: #f0f0f0;
+            --bg-card: #f9f7f6;
+            --bg-card-hover: #fff;
+            --bg-modal: #f9f7f6;
+            --bg-skeleton: #f9f7f6;
+            --bg-skeleton-gradient: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            --bg-tip: linear-gradient(135deg, #ffffff, #f9f7f6);
+            --bg-code: #f5f5f5;
+            --bg-tldr: linear-gradient(135deg, #4CAF50, #45a049);
+
+            --text-primary: #151515;
+            --text-secondary: #666;
+            --text-tertiary: #999;
+            --text-inverse: #ffffff;
+            --text-link: #151515;
+            --text-highlight: #F44336;
+
+            --border-primary: #ddd;
+            --border-secondary: #ccc;
+            --border-focus: #e45151;
+            --border-accent: #e45151;
+
+            --accent-primary: #e45151;
+            --accent-secondary: #e4751a;
+            --accent-hover: #d64141;
+            --accent-shadow: rgba(228, 81, 81, 0.2);
+            --accent-glow: rgba(228, 81, 81, 0.1);
+
+            --nav-bg: #e45151;
+            --nav-text: #f9f7f6;
+            --nav-hover: #f9f7f6;
+            --nav-hover-text: #151515;
+            --nav-selected: #161616;
+            --nav-selected-text: #f9f7f6;
+
+            --header-bg: #161616;
+            --header-text: #ffffff;
+
+            --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-medium: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-heavy: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-focus: 0 0 0 4px rgba(228, 81, 81, 0.1);
+        }
+
+        /* Dark Theme Variables */
+        [data-theme="dark"] {
+            --bg-primary: #383838;
+            --bg-secondary: #282828;
+            --bg-tertiary: #1e1e1e;
+            --bg-card: #282828;
+            --bg-card-hover: #333;
+            --bg-modal: #282828;
+            --bg-skeleton: #282828;
+            --bg-skeleton-gradient: linear-gradient(90deg, #282828 25%, #383838 50%, #282828 75%);
+            --bg-tip: linear-gradient(135deg, #282828, #383838);
+            --bg-code: #1e1e1e;
+            --bg-tldr: linear-gradient(135deg, #4CAF50, #45a049);
+
+            --text-primary: #bebebe;
+            --text-secondary: #999;
+            --text-tertiary: #777;
+            --text-inverse: #000000;
+            --text-link: #ffffff;
+            --text-highlight: #F44336;
+
+            --border-primary: #444;
+            --border-secondary: #555;
+            --border-focus: #e45151;
+            --border-accent: #e45151;
+
+            --accent-primary: #e45151;
+            --accent-secondary: #e4751a;
+            --accent-hover: #d64141;
+            --accent-shadow: rgba(228, 81, 81, 0.3);
+            --accent-glow: rgba(228, 81, 81, 0.2);
+
+            --nav-bg: #e45151;
+            --nav-text: #151515;
+            --nav-hover: #f9f7f6;
+            --nav-hover-text: #151515;
+            --nav-selected: #161616;
+            --nav-selected-text: #f9f7f6;
+
+            --header-bg: #1e1e1e;
+            --header-text: #bebebe;
+
+            --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.2);
+            --shadow-medium: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-heavy: 0 4px 12px rgba(0, 0, 0, 0.4);
+            --shadow-focus: 0 0 0 4px rgba(228, 81, 81, 0.2);
+        }
+
+        /* Apply CSS Variables to Elements */
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .category-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border-primary);
+            color: var(--text-primary);
+        }
+
+        .category-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-accent);
+            box-shadow: 0 4px 12px var(--accent-shadow);
+        }
+
+        .category-name {
+            color: var(--text-primary);
+        }
+
+        .category-description {
+            color: var(--text-secondary);
+        }
+
+        .alphabet-nav {
+            background: var(--bg-secondary);
+            border-bottom: 2px solid var(--border-primary);
+        }
+
+        .alphabet-nav-letter {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-primary);
+        }
+
+        .alphabet-nav-label {
+            color: var(--text-primary);
+        }
+
+        .command-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border-primary);
+            color: var(--text-primary);
+        }
+
+        .command-description {
+            color: var(--text-secondary);
+        }
+
+        .modal-content {
+            background: var(--bg-modal);
+        }
+
+        .modal-body {
+            background: var(--bg-modal);
+        }
+
+        .command-section-content {
+            background: var(--bg-code);
+            border: 1px solid var(--border-primary);
+            color: var(--text-primary);
+        }
+
+        .skeleton-card {
+            background: var(--bg-skeleton);
+            border-color: var(--border-primary);
+        }
+
+        .skeleton {
+            background: var(--bg-skeleton-gradient);
+        }
+
+        .tip-card {
+            background: var(--bg-tip);
+            border-color: var(--border-primary);
+        }
+
+        .tip-content {
+            color: var(--text-primary);
+        }
+
+        .empty-state {
+            color: var(--text-secondary);
+        }
+
+        #search {
+            border-color: var(--border-primary);
+            background-color: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        #search:focus {
+            border-color: var(--border-focus);
+            box-shadow: var(--shadow-focus), var(--shadow-medium);
+        }
+
+        #commandlist a {
+            background-color: var(--bg-card);
+            border-color: var(--border-primary);
+            color: var(--text-primary);
+        }
+
+        #commandlist div.headline {
+            background-color: var(--bg-tertiary);
+            border-color: var(--border-primary);
+        }
+
+        .grid-item {
+            background-color: var(--bg-secondary);
+            border-color: var(--border-primary);
+        }
+
+        .panel {
+            background-color: var(--bg-tertiary);
+        }
+
+        .accordion-button, .toggle-all-button {
+            background-color: var(--bg-secondary);
+            border-color: var(--border-primary);
+            color: var(--text-primary);
+        }
+
+        .code-group {
+            background: var(--bg-tertiary);
+        }
+
+        /* Dark mode support is handled by CSS variables in theme-variables.css */
+
+        /* Copy Button Animation */
+        .copy-button {
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .copy-button.copy-success {
+            background: #4CAF50 !important;
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        .copy-button.copy-success i {
+            animation: checkmark-bounce 0.6s ease;
+        }
+
+        @keyframes checkmark-bounce {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* Enhanced Toast Notifications */
+        .toast-notification {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--accent-primary);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            z-index: 10000;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast-notification.toast-success {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+        }
+
+        .toast-notification.toast-error {
+            background: linear-gradient(135deg, #e45151, #d64141);
+        }
+
+        @media (max-width: 768px) {
+            .toast-notification {
+                bottom: 16px;
+                right: 16px;
+                left: 16px;
+                text-align: center;
+                justify-content: center;
+            }
+        }
+
+        /* Theme Toggle Button Styles */
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-left: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-toggle:active {
+            transform: scale(0.95);
+        }
+
+        .theme-icon {
+            position: absolute;
+            color: white;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .theme-icon-light {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
+
+        .theme-icon-dark {
+            opacity: 0;
+            transform: rotate(90deg) scale(0);
+        }
+
+        /* 仅保留主题图标切换相关的样式，删除其他所有body.dark-theme硬编码样式 */
+
+        /* 删除所有旧的body.dark-theme样式，现在使用CSS变量系统 */
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Adjust body padding for mobile */
+            body {
+                padding-top: 140px;
+            }
+
+            #top-border {
+                top: 44px;
+            }
+
+            .commands-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 8px;
+            }
+
+            .modal-content {
+                margin: 20px;
+                max-width: calc(100% - 40px);
+            }
+
+            .tips-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .tip-card {
+                padding: 20px;
+            }
+
+            #top-border > div {
+                flex-direction: column;
+                gap: 12px;
+                padding: 12px 8px;
+            }
+
+            #filler {
+                display: none;
+            }
+
+            .stats-container {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+
+            .stat-number {
+                font-size: 20px;
+            }
+
+            .stat-label {
+                font-size: 11px;
+            }
+
+            #commandlist {
+                grid-template-columns: 1fr;
+            }
+
+            .alphabet-nav {
+                top: 140px;
+                padding: 8px 0;
+            }
+
+            .alphabet-nav-inner {
+                gap: 3px;
+                padding: 0 8px;
+            }
+
+            .alphabet-nav-letter {
+                width: 28px;
+                height: 28px;
+                font-size: 13px;
+            }
+
+            .alphabet-nav-label {
+                font-size: 11px;
+                display: none;
+            }
+
+            .headline {
+                scroll-margin-top: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#" class="selected" onclick="showPage(event, 'commands')">Commands</a></li>
+            <li><a href="#" onclick="showPage(event, 'basics')">Basics</a></li>
+            <li><a href="#" onclick="showPage(event, 'tips')">Tips</a></li>
+        </ul>
+    </nav>
+
+    <!-- Header -->
+    <div id="top-border">
+        <div>
+            <div class="logo">Linux Command Library</div>
+            <div id="filler"></div>
+            <div class="stats" id="appStats">
+                <div class="stat">
+                    <span class="stat-number">-</span>
+                    <span class="stat-label">Commands</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">-</span>
+                    <span class="stat-label">Categories</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">-</span>
+                    <span class="stat-label">Tips</span>
+                </div>
+            </div>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle dark/light mode">
+                <i data-lucide="sun" class="theme-icon theme-icon-light"></i>
+                <i data-lucide="moon" class="theme-icon theme-icon-dark"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="content-wrapper">
+        <div id="content">
+            <!-- Commands Page -->
+            <div id="commands-page">
+                <div id="search-wrapper">
+                    <input
+                        type="text"
+                        id="search"
+                        placeholder="Search for commands"
+                        autocomplete="off"
+                        aria-label="Search Linux commands"
+                        aria-describedby="search-hint"
+                        role="searchbox" />
+                    <span id="search-hint" class="sr-only">Type at least 2 characters to search</span>
+                    <div class="search-indicator" id="searchIndicator">
+                        <i data-lucide="search" class="search-icon" width="20" height="20"></i>
+                    </div>
+                </div>
+                <!-- A-Z Quick Navigation -->
+                <div id="alphabetNav" class="alphabet-nav" style="display: none;">
+                    <div class="alphabet-nav-inner">
+                        <span class="alphabet-nav-label">Jump to:</span>
+                        <div id="alphabetLetters"></div>
+                    </div>
+                </div>
+                <div id="commandlist">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Loading commands...</p>
+                    </div>
+                </div>
+                <div id="no-results" class="empty-state" style="display: none;">
+                    <div class="empty-state-icon">🔍</div>
+                    <p>No results found</p>
+                </div>
+            </div>
+
+            <!-- Categories Page -->
+            <div id="categories-page" style="display: none;">
+                <h2 style="margin-bottom: 20px;">Browse by Category</h2>
+                <div id="categoriesGrid" class="categories-grid">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Loading categories...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Commands by Category Page -->
+            <div id="category-commands-page" style="display: none;">
+                <h2 id="categoryTitle" style="margin-bottom: 20px;"></h2>
+                <div id="categoryCommandsGrid" class="commands-grid">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Loading commands...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tips Page -->
+            <div id="tips-page" style="display: none;">
+                <div class="tips-header">
+                    <h2>💡 Linux Tips & Tricks</h2>
+                    <button class="btn-primary" onclick="loadRandomTip()">
+                        <i data-lucide="refresh-cw" width="20" height="20"></i>
+                        Random Tip
+                    </button>
+                </div>
+                <div id="tipContent" class="tip-card">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Loading tip...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Command Details -->
+    <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalCommandName">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close-btn" onclick="closeModal()" aria-label="Close modal" title="Close (Esc)">×</button>
+                <div class="modal-command-name" id="modalCommandName"></div>
+                <div class="modal-command-category" id="modalCommandCategory"></div>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading command details...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <a href="#" onclick="showAbout(); return false;">About</a> |
+        <a href="#" onclick="showPrivacy(); return false;">Privacy Policy</a> |
+        <a href="#" onclick="showTerms(); return false;">Terms</a> |
+        <a href="#" onclick="showContact(); return false;">Contact</a>
+        <br><br>
+        Linux Command Library © 2024 - Complete Linux command reference with 7680+ manual pages
+    </footer>
+
+    <script>
+        const API_BASE = '/api';
+        let currentPage = 'commands';
+        let currentCategory = null;
+        let searchTimeout = null;
+        let allCommands = [];
+
+        // Theme Management with CSS Variables
+        function initTheme() {
+            // Check for saved theme preference or default to 'light'
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            // If user has a saved preference, use it. Otherwise, use system preference
+            const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            // Temporarily disable transitions for instant theme switch
+            const style = document.createElement('style');
+            style.textContent = '* { transition: none !important; }';
+            document.head.appendChild(style);
+
+            // Use requestAnimationFrame for instant theme switch
+            requestAnimationFrame(() => {
+                document.documentElement.setAttribute('data-theme', newTheme);
+
+                // Save preference to localStorage
+                localStorage.setItem('theme', newTheme);
+
+                // Re-enable transitions after theme switch
+                requestAnimationFrame(() => {
+                    document.head.removeChild(style);
+
+                    // Defer icon reinitialization to next frame to avoid blocking
+                    if (typeof lucide !== 'undefined') {
+                        // Only reinitialize visible icons for better performance
+                        const visibleIcons = document.querySelectorAll('[data-lucide]:not(.theme-icon)');
+                        lucide.createIcons(visibleIcons);
+                    }
+                });
+            });
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            // Debug: 检查CSS变量值
+            function debugCSSVariables() {
+                const root = document.documentElement;
+                const bgCard = getComputedStyle(root).getPropertyValue('--bg-card');
+                const currentTheme = root.getAttribute('data-theme') || 'light';
+                console.log(`当前主题: ${currentTheme}`);
+                console.log(`--bg-card: ${bgCard}`);
+                console.log(`所有CSS变量:`, {
+                    bgPrimary: getComputedStyle(root).getPropertyValue('--bg-primary'),
+                    bgSecondary: getComputedStyle(root).getPropertyValue('--bg-secondary'),
+                    bgCard: bgCard,
+                    textPrimary: getComputedStyle(root).getPropertyValue('--text-primary')
+                });
+            }
+
+            // Initialize theme first
+            debugCSSVariables();
+            initTheme();
+
+            loadAppStats();
+            loadAllCommands();
+            setupSearch();
+
+            // Setup theme toggle button
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', toggleTheme);
+            }
+
+            // Initialize Lucide icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+
+        // Page navigation
+        function showPage(event, page) {
+            // Prevent default link behavior
+            event.preventDefault();
+
+            // Update navigation
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+
+            // Hide all pages
+            document.getElementById('commands-page').style.display = 'none';
+            document.getElementById('categories-page').style.display = 'none';
+            document.getElementById('category-commands-page').style.display = 'none';
+            document.getElementById('tips-page').style.display = 'none';
+
+            // Show selected page
+            currentPage = page;
+
+            switch (page) {
+                case 'commands':
+                    document.getElementById('commands-page').style.display = 'block';
+                    if (allCommands.length > 0) {
+                        displayAllCommands();
+                    }
+                    break;
+                case 'basics':
+                    document.getElementById('categories-page').style.display = 'block';
+                    loadCategories();
+                    break;
+                case 'tips':
+                    document.getElementById('tips-page').style.display = 'block';
+                    loadRandomTip();
+                    break;
+            }
+        }
+
+        // Load application statistics
+        async function loadAppStats() {
+            try {
+                const response = await fetch(`${API_BASE}/stats`);
+                const result = await response.json();
+
+                if (result.success && result.data) {
+                    const stats = result.data;
+                    document.getElementById('appStats').innerHTML = `
+                        <div class="stats-container">
+                            <div class="stat">
+                                <span class="stat-number">${stats.total_commands.toLocaleString()}</span>
+                                <span class="stat-label">Commands</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">${stats.total_categories}</span>
+                                <span class="stat-label">Categories</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">${stats.total_tips.toLocaleString()}</span>
+                                <span class="stat-label">Tips</span>
+                            </div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Failed to load app stats:', error);
+            }
+        }
+
+        // Load all commands for alphabetical listing
+        async function loadAllCommands() {
+            const commandList = document.getElementById('commandlist');
+
+            // Show skeleton loading state
+            commandList.innerHTML = `
+                ${Array(8).fill().map(() => `
+                    <div class="skeleton-card">
+                        <div class="skeleton skeleton-title"></div>
+                        <div class="skeleton skeleton-text"></div>
+                        <div class="skeleton skeleton-text short"></div>
+                    </div>
+                `).join('')}
+            `;
+
+            try {
+                const response = await fetch(`${API_BASE}/commands`);
+                const result = await response.json();
+
+                if (result.success && result.data) {
+                    allCommands = result.data;
+                    displayAllCommands();
+                }
+            } catch (error) {
+                console.error('Failed to load commands:', error);
+                commandList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⚠️</div>
+                        <p>Failed to load commands</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Display all commands alphabetically
+        function displayAllCommands() {
+            const commandList = document.getElementById('commandlist');
+            const alphabetNav = document.getElementById('alphabetNav');
+
+            if (allCommands.length === 0) {
+                commandList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📋</div>
+                        <p>No commands found</p>
+                    </div>
+                `;
+                alphabetNav.style.display = 'none';
+                return;
+            }
+
+            // Separate commands into letters and symbols
+            const letterCommands = [];
+            const symbolCommands = [];
+            const availableLetters = new Set();
+
+            allCommands.forEach(cmd => {
+                const firstChar = cmd.name.charAt(0).toUpperCase();
+                // Check if first character is a letter (A-Z)
+                if (/^[A-Z]$/.test(firstChar)) {
+                    letterCommands.push(cmd);
+                    availableLetters.add(firstChar);
+                } else {
+                    symbolCommands.push(cmd);
+                }
+            });
+
+            // Sort both arrays alphabetically
+            letterCommands.sort((a, b) => a.name.localeCompare(b.name));
+            symbolCommands.sort((a, b) => a.name.localeCompare(b.name));
+
+            let html = '';
+            let currentLetter = '';
+
+            // Display letter commands first
+            letterCommands.forEach(cmd => {
+                const firstLetter = cmd.name.charAt(0).toUpperCase();
+                if (firstLetter !== currentLetter) {
+                    currentLetter = firstLetter;
+                    html += `<div class="headline" id="letter-${currentLetter}">${currentLetter}</div>`;
+                }
+                html += `<a href="#" onclick="showCommandDetail(${cmd.id}); return false;" data-c="${cmd.name.toLowerCase()}">${cmd.name}</a>`;
+            });
+
+            // Display symbol commands at the end under "#" category
+            if (symbolCommands.length > 0) {
+                html += `<div class="headline" id="letter-hash">#</div>`;
+                symbolCommands.forEach(cmd => {
+                    html += `<a href="#" onclick="showCommandDetail(${cmd.id}); return false;" data-c="${cmd.name.toLowerCase()}">${cmd.name}</a>`;
+                });
+            }
+
+            commandList.innerHTML = html;
+
+            // Build and show alphabet navigation
+            buildAlphabetNav(availableLetters, symbolCommands.length > 0);
+        }
+
+        // Build alphabet navigation bar
+        function buildAlphabetNav(availableLetters, hasSymbols) {
+            const alphabetNav = document.getElementById('alphabetNav');
+            const alphabetLetters = document.getElementById('alphabetLetters');
+            const allLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+            let html = '';
+            allLetters.forEach(letter => {
+                const isAvailable = availableLetters.has(letter);
+                const className = isAvailable ? 'alphabet-nav-letter' : 'alphabet-nav-letter disabled';
+                html += `<a href="#letter-${letter}" class="${className}" data-letter="${letter}" onclick="${isAvailable ? 'scrollToLetter(\'' + letter + '\'); return false;' : 'return false;'}">${letter}</a>`;
+            });
+
+            // Add # for symbols if available
+            if (hasSymbols) {
+                html += `<a href="#letter-hash" class="alphabet-nav-letter" data-letter="#" onclick="scrollToLetter('#'); return false;">#</a>`;
+            }
+
+            alphabetLetters.innerHTML = html;
+            alphabetNav.style.display = 'block';
+        }
+
+        // Scroll to a specific letter section
+        function scrollToLetter(letter) {
+            const elementId = letter === '#' ? 'letter-hash' : `letter-${letter}`;
+            const element = document.getElementById(elementId);
+
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                // Highlight the active letter temporarily
+                document.querySelectorAll('.alphabet-nav-letter').forEach(link => {
+                    link.classList.remove('active');
+                });
+                const activeLink = document.querySelector(`.alphabet-nav-letter[data-letter="${letter}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                    setTimeout(() => {
+                        activeLink.classList.remove('active');
+                    }, 1000);
+                }
+            }
+        }
+
+        // Setup search functionality
+        function setupSearch() {
+            const searchInput = document.getElementById('search');
+
+            searchInput.addEventListener('input', (e) => {
+                clearTimeout(searchTimeout);
+                const query = e.target.value.trim();
+
+                if (query.length >= 2) {
+                    searchTimeout = setTimeout(() => {
+                        searchCommands(query);
+                    }, 200);
+                } else if (query.length === 0) {
+                    displayAllCommands();
+                }
+            });
+
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const query = searchInput.value.trim();
+                    if (query) {
+                        searchCommands(query);
+                    }
+                }
+            });
+        }
+
+        // Search commands
+        async function searchCommands(query) {
+            if (!query || query.length < 2) {
+                displayAllCommands();
+                return;
+            }
+
+            const commandList = document.getElementById('commandlist');
+            const alphabetNav = document.getElementById('alphabetNav');
+            const searchIndicator = document.getElementById('searchIndicator');
+
+            // Hide alphabet navigation during search
+            alphabetNav.style.display = 'none';
+
+            // Show searching state
+            searchIndicator.classList.add('searching');
+            commandList.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Searching...</p>
+                </div>
+            `;
+
+            try {
+                const response = await fetch(`${API_BASE}/search?q=${encodeURIComponent(query)}`);
+                const result = await response.json();
+
+                if (result.success && result.data) {
+                    displaySearchResults(result.data);
+                }
+            } catch (error) {
+                console.error('Search failed:', error);
+                commandList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">❌</div>
+                        <p>Search failed. Please try again.</p>
+                    </div>
+                `;
+            } finally {
+                // Remove searching state
+                searchIndicator.classList.remove('searching');
+            }
+        }
+
+        // Display search results
+        function displaySearchResults(commands) {
+            const commandList = document.getElementById('commandlist');
+            const noResults = document.getElementById('no-results');
+
+            if (commands.length === 0) {
+                commandList.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            commandList.style.display = 'block';
+            noResults.style.display = 'none';
+
+            let html = '';
+            commands.forEach(cmd => {
+                html += `<a href="#" onclick="showCommandDetail(${cmd.id}); return false;" data-c="${cmd.name.toLowerCase()}">${cmd.name}</a>`;
+            });
+
+            commandList.innerHTML = html;
+        }
+
+        // Load categories
+        async function loadCategories() {
+            try {
+                const response = await fetch(`${API_BASE}/categories/detailed`);
+                const result = await response.json();
+
+                if (result.success && result.data) {
+                    displayCategories(result.data);
+                }
+            } catch (error) {
+                console.error('Failed to load categories:', error);
+                document.getElementById('categoriesGrid').innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⚠️</div>
+                        <p>Failed to load categories</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Map category names to Lucide icon names
+        function getCategoryIcon(categoryTitle) {
+            const iconMap = {
+                'Networking': 'network',
+                'File Management': 'folder',
+                'System': 'cpu',
+                'Text Processing': 'file-text',
+                'Process Management': 'activity',
+                'User Management': 'users',
+                'Package Management': 'package',
+                'Disk Management': 'hard-drive',
+                'Security': 'shield',
+                'Shell': 'terminal',
+                'Archive': 'archive',
+                'Development': 'code',
+                'Git': 'git-branch',
+                'Database': 'database',
+                'Web': 'globe',
+                'SSH': 'key',
+                'Docker': 'box',
+                'Monitoring': 'bar-chart',
+                'Compression': 'file-archive',
+                'Search': 'search',
+                'Permission': 'lock',
+                'Time': 'clock',
+                'Email': 'mail',
+                'Print': 'printer',
+                'Backup': 'save',
+                'Performance': 'zap',
+                'Default': 'folder'
+            };
+
+            // Try exact match first
+            if (iconMap[categoryTitle]) {
+                return iconMap[categoryTitle];
+            }
+
+            // Try partial match
+            const lowerTitle = categoryTitle.toLowerCase();
+            for (const [key, icon] of Object.entries(iconMap)) {
+                if (lowerTitle.includes(key.toLowerCase()) || key.toLowerCase().includes(lowerTitle)) {
+                    return icon;
+                }
+            }
+
+            return iconMap['Default'];
+        }
+
+        // Display categories
+        function displayCategories(categories) {
+            const grid = document.getElementById('categoriesGrid');
+
+            if (categories.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📂</div>
+                        <p>No categories found</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = categories.map(cat => {
+                const iconName = getCategoryIcon(cat.title);
+                return `
+                    <a href="#" class="category-card" onclick="showCategoryCommands('${cat.title}'); return false;" data-category="${cat.title}">
+                        <i data-lucide="${iconName}" class="category-icon"></i>
+                        <div class="category-name">${cat.title}</div>
+                        ${cat.description ? `<div class="category-description">${cat.description}</div>` : ''}
+                    </a>
+                `;
+            }).join('');
+
+            // Reinitialize Lucide icons for dynamically added content
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+
+        // Show commands for a specific category
+        async function showCategoryCommands(category) {
+            currentCategory = category;
+
+            // Hide all pages
+            document.getElementById('commands-page').style.display = 'none';
+            document.getElementById('categories-page').style.display = 'none';
+            document.getElementById('category-commands-page').style.display = 'block';
+
+            document.getElementById('categoryTitle').textContent = `${category} Commands`;
+
+            const grid = document.getElementById('categoryCommandsGrid');
+            grid.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading commands...</p>
+                </div>
+            `;
+
+            try {
+                const response = await fetch(`${API_BASE}/category/${encodeURIComponent(category)}`);
+                const result = await response.json();
+
+                if (result.success && result.data) {
+                    displayCategoryCommands(result.data);
+                }
+            } catch (error) {
+                console.error('Failed to load category commands:', error);
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⚠️</div>
+                        <p>Failed to load commands</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Display commands for a category
+        function displayCategoryCommands(commands) {
+            const grid = document.getElementById('categoryCommandsGrid');
+
+            if (commands.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🔍</div>
+                        <p>No commands found in this category</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = commands.map(cmd => {
+                // 安全地转义HTML特殊字符
+                const escapeHtml = (text) => {
+                    const div = document.createElement('div');
+                    div.textContent = text;
+                    return div.innerHTML;
+                };
+
+                const safeCommandName = escapeHtml(cmd.name);
+                const safeDescription = escapeHtml(cmd.description);
+
+                // 处理引号转义用于JavaScript
+                const jsSafeCommand = cmd.name.replace(/'/g, "\\'").replace(/"/g, '\\"');
+
+                return `
+                    <div class="command-card basic-command">
+                        <div class="command-header">
+                            <div class="command-name" title="${safeCommandName}">${safeCommandName}</div>
+                            <button class="copy-button" onclick="copyCommand('${jsSafeCommand}')" title="Copy command">
+                                <i data-lucide="copy" width="16" height="16"></i>
+                            </button>
+                        </div>
+                        <div class="command-description" title="${safeDescription}">${safeDescription}</div>
+                    </div>
+                `;
+            }).join('');
+
+            // Reinitialize Lucide icons for dynamically added content
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+
+        // Show command detail in modal
+        async function showCommandDetail(commandId) {
+            const modal = document.getElementById('modal');
+            const modalBody = document.getElementById('modalBody');
+            const modalCommandName = document.getElementById('modalCommandName');
+            const modalCommandCategory = document.getElementById('modalCommandCategory');
+            const closeBtn = modal.querySelector('.close-btn');
+
+            // Store the element that triggered the modal for focus restoration
+            modal.dataset.triggerElement = document.activeElement.id || 'search';
+
+            modal.classList.add('active');
+            modalBody.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading command details...</p>
+                </div>
+            `;
+
+            // Trap focus within modal
+            setTimeout(() => {
+                closeBtn.focus();
+            }, 100);
+
+            try {
+                const response = await fetch(`${API_BASE}/commands/${commandId}`);
+                const result = await response.json();
+
+                if (result.success && result.data) {
+                    const cmd = result.data;
+                    modalCommandName.textContent = cmd.name;
+                    modalCommandCategory.textContent = cmd.category;
+
+                    let content = '';
+
+                    // Add TLDR if available
+                    if (cmd.tldr) {
+                        content += `
+                            <div class="tldr-section">
+                                <div class="tldr-title">📋 TL;DR</div>
+                                <div class="tldr-content">${cmd.tldr}</div>
+                            </div>
+                        `;
+                    }
+
+                    // Add description
+                    content += `
+                        <div class="command-section">
+                            <h3>Description</h3>
+                            <div class="command-section-content">${cmd.description}</div>
+                        </div>
+                    `;
+
+                    // Add sections
+                    cmd.sections.forEach(section => {
+                        content += `
+                            <div class="command-section">
+                                <h3>${section.title}</h3>
+                                <div class="command-section-content">${formatContent(section.content)}</div>
+                            </div>
+                        `;
+                    });
+
+                    modalBody.innerHTML = content;
+                }
+            } catch (error) {
+                console.error('Failed to load command details:', error);
+                modalBody.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">❌</div>
+                        <p>Failed to load command details</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Format content for display - handle markdown and HTML
+        function formatContent(content) {
+            // Handle HTML tags from the database
+            let formatted = content
+                .replace(/<br>/g, '\n')
+                .replace(/<b>(.*?)\u003c\/b>/g, '**$1**')
+                .replace(/<i>(.*?)\u003c\/i>/g, '*$1*')
+                .replace(/<code>(.*?)\u003c\/code>/g, '`$1`')
+                .replace(/<pre>(.*?)\u003c\/pre>/g, '```\n$1\n```')
+                .replace(/&nbsp;/g, ' ')
+                .replace(/&amp;/g, '&')
+                .replace(/&lt;/g, '<')
+                .replace(/&gt;/g, '>');
+
+            // Convert markdown-style formatting to HTML for better display
+            formatted = formatted
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/`(.*?)`/g, '<code>$1</code>');
+
+            return formatted;
+        }
+
+        // Close modal with focus restoration
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('active');
+
+            // Restore focus to trigger element
+            const triggerElementId = modal.dataset.triggerElement;
+            if (triggerElementId) {
+                const triggerElement = document.getElementById(triggerElementId);
+                if (triggerElement) {
+                    setTimeout(() => {
+                        triggerElement.focus();
+                    }, 100);
+                }
+            }
+        }
+
+        // Load random tip
+        async function loadRandomTip() {
+            const tipContent = document.getElementById('tipContent');
+
+            // Show loading state
+            tipContent.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading tip...</p>
+                </div>
+            `;
+
+            try {
+                const response = await fetch(`${API_BASE}/random-tip`);
+                const result = await response.json();
+
+                if (result.success && result.data) {
+                    const tip = result.data;
+
+                    // Extract description from sections
+                    let description = '';
+                    if (tip.sections && tip.sections.length > 0) {
+                        description = tip.sections
+                            .filter(s => s.type === 0 || s.type === 1)
+                            .map(s => {
+                                const text = s.data1 || '';
+                                return text.replace(/\\n/g, '<br>');
+                            })
+                            .join('<br><br>');
+                    }
+
+                    if (!description) {
+                        description = 'No detailed information available for this tip.';
+                    }
+
+                    tipContent.innerHTML = `
+                        <div class="tip-title">
+                            <span>💡</span>
+                            <span>${tip.title || 'Linux Tip'}</span>
+                        </div>
+                        <div class="tip-content">
+                            ${description}
+                        </div>
+                    `;
+                } else {
+                    tipContent.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📝</div>
+                            <p>No tips available at the moment</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Failed to load tip:', error);
+                tipContent.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⚠️</div>
+                        <p>Failed to load tip. Please try again.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Utility functions
+        // Copy command function for basic commands
+        function copyCommand(command) {
+            copy(command);
+        }
+
+        function showAbout() {
+            alert('Linux Command Library - Complete Linux command reference with 7680+ manual pages, cheat sheets, and tips. Built with Rust and inspired by the original Kotlin project.');
+        }
+
+        function showPrivacy() {
+            alert('Privacy Policy: This application does not collect any personal data. All data is stored locally and the app works completely offline.');
+        }
+
+        function showTerms() {
+            alert('Terms of Service: This application is provided as-is for educational and reference purposes. The command information is sourced from various Linux manual pages and community contributions.');
+        }
+
+        function showContact() {
+            alert('Contact: For questions or feedback about this Linux Command Library implementation, please check the project repository.');
+        }
+
+        // Modal event listeners
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

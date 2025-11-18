@@ -1,0 +1,223 @@
+/* CSS Variables for Theme System */
+:root {
+    --bg-primary: #f9f7f6;
+    --bg-secondary: #f6f6f6;
+    --bg-tertiary: #f0f0f0;
+    --bg-card: #f9f7f6;
+    --bg-card-hover: #fff;
+    --bg-modal: #f9f7f6;
+    --bg-skeleton: #f9f7f6;
+    --bg-skeleton-gradient: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    --bg-tip: linear-gradient(135deg, #ffffff, #f9f7f6);
+    --bg-code: #f5f5f5;
+    --bg-tldr: linear-gradient(135deg, #4CAF50, #45a049);
+
+    --text-primary: #151515;
+    --text-secondary: #666;
+    --text-tertiary: #999;
+    --text-inverse: #ffffff;
+    --text-link: #151515;
+    --text-highlight: #F44336;
+
+    --border-primary: #ddd;
+    --border-secondary: #ccc;
+    --border-focus: #e45151;
+    --border-accent: #e45151;
+
+    --accent-primary: #e45151;
+    --accent-secondary: #e4751a;
+    --accent-hover: #d64141;
+    --accent-shadow: rgba(228, 81, 81, 0.2);
+    --accent-glow: rgba(228, 81, 81, 0.1);
+
+    --nav-bg: #e45151;
+    --nav-text: #f9f7f6;
+    --nav-hover: #f9f7f6;
+    --nav-hover-text: #151515;
+    --nav-selected: #161616;
+    --nav-selected-text: #f9f7f6;
+
+    --header-bg: #161616;
+    --header-text: #ffffff;
+
+    --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-medium: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-heavy: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --shadow-focus: 0 0 0 4px rgba(228, 81, 81, 0.1);
+}
+
+/* Dark Theme Variables */
+[data-theme="dark"] {
+    --bg-primary: #383838;
+    --bg-secondary: #282828;
+    --bg-tertiary: #1e1e1e;
+    --bg-card: #282828;
+    --bg-card-hover: #333;
+    --bg-modal: #282828;
+    --bg-skeleton: #282828;
+    --bg-skeleton-gradient: linear-gradient(90deg, #282828 25%, #383838 50%, #282828 75%);
+    --bg-tip: linear-gradient(135deg, #282828, #383838);
+    --bg-code: #1e1e1e;
+    --bg-tldr: linear-gradient(135deg, #4CAF50, #45a049);
+
+    --text-primary: #bebebe;
+    --text-secondary: #999;
+    --text-tertiary: #777;
+    --text-inverse: #000000;
+    --text-link: #ffffff;
+    --text-highlight: #F44336;
+
+    --border-primary: #444;
+    --border-secondary: #555;
+    --border-focus: #e45151;
+    --border-accent: #e45151;
+
+    --accent-primary: #e45151;
+    --accent-secondary: #e4751a;
+    --accent-hover: #d64141;
+    --accent-shadow: rgba(228, 81, 81, 0.3);
+    --accent-glow: rgba(228, 81, 81, 0.2);
+
+    --nav-bg: #e45151;
+    --nav-text: #151515;
+    --nav-hover: #f9f7f6;
+    --nav-hover-text: #151515;
+    --nav-selected: #161616;
+    --nav-selected-text: #f9f7f6;
+
+    --header-bg: #1e1e1e;
+    --header-text: #bebebe;
+
+    --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.2);
+    --shadow-medium: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-heavy: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-focus: 0 0 0 4px rgba(228, 81, 81, 0.2);
+}
+
+/* Apply CSS Variables to Elements */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.category-card {
+    background: var(--bg-card);
+    border: 2px solid var(--border-primary);
+    color: var(--text-primary);
+}
+
+.category-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-accent);
+    box-shadow: 0 4px 12px var(--accent-shadow);
+}
+
+.category-name {
+    color: var(--text-primary);
+}
+
+.category-description {
+    color: var(--text-secondary);
+}
+
+.alphabet-nav {
+    background: var(--bg-secondary);
+    border-bottom: 2px solid var(--border-primary);
+}
+
+.alphabet-nav-letter {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-primary);
+}
+
+.alphabet-nav-label {
+    color: var(--text-primary);
+}
+
+.command-card {
+    background: var(--bg-card);
+    border: 2px solid var(--border-primary);
+    color: var(--text-primary);
+}
+
+.command-description {
+    color: var(--text-secondary);
+}
+
+.modal-content {
+    background: var(--bg-modal);
+}
+
+.modal-body {
+    background: var(--bg-modal);
+}
+
+.command-section-content {
+    background: var(--bg-code);
+    border: 1px solid var(--border-primary);
+    color: var(--text-primary);
+}
+
+.skeleton-card {
+    background: var(--bg-skeleton);
+    border-color: var(--border-primary);
+}
+
+.skeleton {
+    background: var(--bg-skeleton-gradient);
+}
+
+.tip-card {
+    background: var(--bg-tip);
+    border-color: var(--border-primary);
+}
+
+.tip-content {
+    color: var(--text-primary);
+}
+
+.empty-state {
+    color: var(--text-secondary);
+}
+
+#search {
+    border-color: var(--border-primary);
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+}
+
+#search:focus {
+    border-color: var(--border-focus);
+    box-shadow: var(--shadow-focus), var(--shadow-medium);
+}
+
+#commandlist a {
+    background-color: var(--bg-card);
+    border-color: var(--border-primary);
+    color: var(--text-primary);
+}
+
+#commandlist div.headline {
+    background-color: var(--bg-tertiary);
+    border-color: var(--border-primary);
+}
+
+.grid-item {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-primary);
+}
+
+.panel {
+    background-color: var(--bg-tertiary);
+}
+
+.accordion-button, .toggle-all-button {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-primary);
+    color: var(--text-primary);
+}
+
+.code-group {
+    background: var(--bg-tertiary);
+}
