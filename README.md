@@ -294,4 +294,6 @@ For issues and questions:
 
 ---
 
+Thanks for [origin](https://github.com/SimonSchubert/LinuxCommandLibrary)
+
 **Built with ❤️ using Rust and inspired by the original Kotlin project**
