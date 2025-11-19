@@ -12,7 +12,7 @@ permissions:
 
 env:
   CARGO_TERM_COLOR: always
-  BINARY_NAME: linux-command-library
+  BINARY_NAME: LinuxCommandLibrary
 
 jobs:
   release:
@@ -24,54 +24,54 @@ jobs:
           # Linux targets
           - os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            exe: linux-command-library
+            exe: LinuxCommandLibrary
             cross: false
 
           - os: ubuntu-latest
             target: x86_64-unknown-linux-musl
-            exe: linux-command-library
+            exe: LinuxCommandLibrary
             cross: true
 
           - os: ubuntu-latest
             target: aarch64-unknown-linux-gnu
-            exe: linux-command-library
+            exe: LinuxCommandLibrary
             cross: true
 
           - os: ubuntu-latest
             target: aarch64-unknown-linux-musl
-            exe: linux-command-library
+            exe: LinuxCommandLibrary
             cross: true
 
           - os: ubuntu-latest
             target: armv7-unknown-linux-gnueabihf
-            exe: linux-command-library
+            exe: LinuxCommandLibrary
             cross: true
 
           - os: ubuntu-latest
             target: armv7-unknown-linux-musleabihf
-            exe: linux-command-library
+            exe: LinuxCommandLibrary
             cross: true
 
           # Windows targets
           - os: windows-latest
             target: x86_64-pc-windows-msvc
-            exe: linux-command-library.exe
+            exe: LinuxCommandLibrary.exe
             cross: false
 
           - os: windows-latest
             target: i686-pc-windows-msvc
-            exe: linux-command-library.exe
+            exe: LinuxCommandLibrary.exe
             cross: false
 
           # macOS targets
           - os: macos-latest
             target: x86_64-apple-darwin
-            exe: linux-command-library
+            exe: LinuxCommandLibrary
             cross: false
 
           - os: macos-latest
             target: aarch64-apple-darwin
-            exe: linux-command-library
+            exe: LinuxCommandLibrary
             cross: false
 
     steps:
