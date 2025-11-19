@@ -58,14 +58,37 @@ GET  /                          # Serve web interface
 ## 🛠️ Installation & Setup
 
 ### Prerequisites
-- Rust 1.70+
-- SQLite database file (`database.db`)
+- Rust 1.70+ (for local development)
+- Docker & Docker Compose (for containerized deployment - **recommended**)
 
-### Quick Start
+### Quick Start with Docker (Recommended)
+
+The easiest way to run the application is using Docker. The database is automatically downloaded during the build process.
+
 ```bash
 # Clone the repository
 git clone <repository-url>
 cd LinuxCommandLibrary
+
+# Build and run with docker-compose
+docker-compose up -d
+
+# Or build and run manually
+docker build -t linux-command-library .
+docker run -p 8080:8080 linux-command-library
+```
+
+Access the application at `http://localhost:8080`
+
+### Local Development Setup
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd LinuxCommandLibrary
+
+# Download the database (if not present)
+wget https://github.com/SimonSchubert/LinuxCommandLibrary/raw/master/assets/database.db
 
 # Build the project
 cargo build --release
@@ -83,29 +106,84 @@ DATABASE_PATH=custom.db SERVER_ADDR=0.0.0.0:3000 ./target/release/LinuxCommandLi
 - `ENABLE_CORS`: Enable CORS support (default: `true`)
 - `RUST_LOG`: Log level (default: `info`)
 
+## 🐳 Docker Deployment
+
+### Using Docker Compose (Recommended)
+```bash
+docker-compose up -d
+```
+
+### Manual Docker Commands
+```bash
+# Build the image
+docker build -t linux-command-library .
+
+# Run the container
+docker run -d \
+  --name linux-command-library \
+  -p 8080:8080 \
+  -e RUST_LOG=info \
+  linux-command-library
+
+# View logs
+docker logs -f linux-command-library
+
+# Stop the container
+docker stop linux-command-library
+```
+
+### Docker Features
+- **Multi-stage build**: Optimized image size
+- **Automatic database download**: No manual database setup required
+- **Health checks**: Built-in health monitoring
+- **Alpine-based**: Minimal image footprint (~50MB)
+- **Production-ready**: Includes proper signal handling and graceful shutdown
+
 ## 💻 Frontend Interface
 
-The web interface has been completely redesigned with:
+The web interface has been completely redesigned with modern features and enhanced user experience:
 
 ### Modern Design Features
 - **Responsive Layout**: Works perfectly on desktop, tablet, and mobile
-- **Dark Mode Support**: Automatic dark/light theme switching
+- **Dark Mode Support**: Automatic dark/light theme switching with smooth transitions
 - **Smooth Animations**: Subtle transitions and hover effects
 - **Accessibility**: Proper ARIA labels and keyboard navigation
 - **SEO Optimized**: Meta tags and structured data
+- **Print-Friendly**: Optimized print styles for documentation
 
-### Enhanced User Experience
-- **Smart Search**: Real-time suggestions as you type
-- **Category Icons**: Visual category representation with emoji icons
-- **Command Previews**: Hover effects and quick previews
-- **Modal Details**: Detailed command information in elegant modals
-- **Quick Actions**: Popular commands, random tips, and category browsing
+### Enhanced Search Experience
+- **Smart Search**: Real-time search with debouncing
+- **Search History**: Stores last 10 searches with quick access
+- **Clear Button**: One-click search field clearing
+- **Keyboard Shortcuts**: Press `/` to quickly focus search
+- **Search Indicators**: Visual feedback during search
+
+### Navigation Enhancements
+- **URL Routing**: Hash-based routing for shareable URLs
+- **Breadcrumb Navigation**: Clear navigation path in category views
+- **Back to Top**: Floating button appears when scrolling down
+- **A-Z Navigation**: Quick alphabetical jump for command list
+
+### Command Details Modal
+- **Copy Actions**: Copy command name, share link, copy sections
+- **Section Management**: Individual copy buttons for each section
+- **Share Functionality**: Native share API support with fallback
+- **Keyboard Navigation**: Full keyboard support with Esc to close
+- **Focus Management**: Proper focus restoration when closing
+
+### User Experience Features
+- **Toast Notifications**: Modern toast messages for actions
+- **Loading States**: Skeleton loaders and spinners
+- **Empty States**: Helpful messages when no results found
+- **Category Icons**: Visual category representation with Lucide icons
+- **Smooth Scrolling**: Enhanced scroll behavior throughout
 
 ### Performance Optimizations
-- **Lazy Loading**: Efficient data loading and caching
-- **Debounced Search**: Prevents excessive API calls
-- **Optimized Images**: Icons and graphics optimized for web
-- **Progressive Enhancement**: Works without JavaScript for basic functionality
+- **Debounced Search**: Prevents excessive API calls (200ms delay)
+- **Lazy Icon Loading**: Icons loaded only when needed
+- **LocalStorage**: Efficient caching of search history and theme
+- **Optimized Icons**: Using Lucide icon library for consistency
+- **Progressive Enhancement**: Core functionality works without JavaScript
 
 ## 🔧 Technical Architecture
 

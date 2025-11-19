@@ -1,0 +1,31 @@
+# Git
+.git
+.gitignore
+
+# Rust
+target/
+Cargo.lock
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Build artifacts
+*.o
+*.so
+*.exe
+
+# Documentation
+README.md
+docs/
+
+# Database (will be downloaded during build)
+database.db
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml
