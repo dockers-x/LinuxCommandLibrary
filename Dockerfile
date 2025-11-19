@@ -55,7 +55,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy executable from build stage to this image
-COPY --from=builder /app/target/release/LinuxCommandLibrary /app/linux-command-library
+COPY --from=builder /app/target/release/LinuxCommandLibrary /app/LinuxCommandLibrary
 
 # Copy database file to runtime environment
 COPY --from=builder /tmp/database.db /app/database.db
@@ -68,4 +68,4 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
     CMD wget --no-verbose --tries=1 --spider http://localhost:8080/health || exit 1
 
 # Run executable
-CMD ["./linux-command-library"]
+CMD ["./LinuxCommandLibrary"]
