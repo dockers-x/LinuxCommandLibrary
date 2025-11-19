@@ -1,5 +1,5 @@
 # Use official fixed Rust version image as build environment
-FROM rust:bookworm as builder
+FROM rust:bookworm AS builder
 
 # Set working directory
 WORKDIR /app
