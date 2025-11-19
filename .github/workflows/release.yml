@@ -21,7 +21,7 @@ jobs:
     strategy:
       matrix:
         include:
-          # Linux targets
+          # Linux targets - amd64 (x86_64)
           - os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
             exe: LinuxCommandLibrary
@@ -32,6 +32,7 @@ jobs:
             exe: LinuxCommandLibrary
             cross: true
 
+          # Linux targets - arm64 (aarch64)
           - os: ubuntu-latest
             target: aarch64-unknown-linux-gnu
             exe: LinuxCommandLibrary
@@ -42,33 +43,13 @@ jobs:
             exe: LinuxCommandLibrary
             cross: true
 
-          - os: ubuntu-latest
-            target: armv7-unknown-linux-gnueabihf
-            exe: LinuxCommandLibrary
-            cross: true
-
-          - os: ubuntu-latest
-            target: armv7-unknown-linux-musleabihf
-            exe: LinuxCommandLibrary
-            cross: true
-
-          # Windows targets
+          # Windows target - amd64 only
           - os: windows-latest
             target: x86_64-pc-windows-msvc
             exe: LinuxCommandLibrary.exe
             cross: false
 
-          - os: windows-latest
-            target: i686-pc-windows-msvc
-            exe: LinuxCommandLibrary.exe
-            cross: false
-
-          # macOS targets
-          - os: macos-latest
-            target: x86_64-apple-darwin
-            exe: LinuxCommandLibrary
-            cross: false
-
+          # macOS target - arm64 only
           - os: macos-latest
             target: aarch64-apple-darwin
             exe: LinuxCommandLibrary
