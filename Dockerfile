@@ -58,6 +58,11 @@ COPY --from=builder /app/target/release/LinuxCommandLibrary ./LinuxCommandLibrar
 # Copy database file to runtime environment
 COPY --from=builder /tmp/database.db ./database.db
 
+# Copy static resources (stylesheets, scripts, images)
+COPY --from=builder /app/src/stylesheets ./src/stylesheets
+COPY --from=builder /app/src/scripts ./src/scripts
+COPY --from=builder /app/src/images ./src/images
+
 # Make binary executable
 RUN chmod +x ./LinuxCommandLibrary
 
